@@ -1,84 +1,254 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>St Eddies Unblocked Games</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>St Eddies — Games</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-      text-align: center;
+    :root{
+      --bg:#0b1020;
+      --panel:#121a33;
+      --panel2:#0f1730;
+      --text:#e8ecff;
+      --muted:#aab3d6;
+      --accent:#7c3aed; /* purple-ish like Google Sites */
+      --card:#162046;
+      --cardHover:#1b2a5c;
+      --border:rgba(255,255,255,.08);
     }
-    header {
-      padding: 20px;
-      background: #020617;
-      font-size: 24px;
-      font-weight: bold;
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
+    header{
+      display:flex;align-items:center;gap:12px;
+      padding:14px 16px;background:linear-gradient(90deg,var(--accent),#3b82f6);
+      position:sticky;top:0;z-index:20;
     }
-    .games {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 15px;
-      padding: 20px;
+    .back{
+      width:40px;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,.25);
+      background:rgba(0,0,0,.15);color:white;font-size:18px;cursor:pointer;
+      display:grid;place-items:center;
     }
-    .game {
-      background: #1e293b;
-      padding: 15px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: 0.2s;
+    .back:disabled{opacity:.4;cursor:not-allowed}
+    .title{font-weight:800}
+    .sub{color:rgba(255,255,255,.9);font-size:12px}
+    main{display:grid;grid-template-columns: 320px 1fr;min-height:calc(100vh - 68px)}
+    nav{
+      border-right:1px solid var(--border);
+      background:var(--panel2);
+      padding:14px;
     }
-    .game:hover {
-      background: #334155;
-      transform: scale(1.05);
+    .crumbs{font-size:12px;color:var(--muted);margin-bottom:10px}
+    .list{display:flex;flex-direction:column;gap:10px}
+    .item{
+      border:1px solid var(--border);
+      background:var(--panel);
+      border-radius:14px;
+      padding:12px 12px;
+      display:flex;justify-content:space-between;align-items:center;
+      cursor:pointer;
+      transition:.15s transform,.15s background;
     }
-    iframe {
-      width: 100%;
-      height: 90vh;
-      border: none;
-      display: none;
+    .item:hover{background:#18224a;transform:translateY(-1px)}
+    .arrow{opacity:.75}
+    .content{padding:14px}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap:12px;
     }
-    button {
-      background: #22c55e;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
+    .card{
+      border:1px solid var(--border);
+      background:var(--card);
+      border-radius:16px;
+      padding:14px;
+      cursor:pointer;
+      transition:.15s transform,.15s background;
+      min-height:92px;
+      display:flex;flex-direction:column;justify-content:space-between;
+    }
+    .card:hover{background:var(--cardHover);transform:translateY(-2px)}
+    .card .name{font-weight:800}
+    .card .tag{font-size:12px;color:var(--muted);margin-top:6px}
+    .player{
+      border:1px solid var(--border);
+      border-radius:16px;
+      overflow:hidden;
+      background:black;
+      height:78vh;
+      min-height:420px;
+    }
+    iframe{width:100%;height:100%;border:0}
+    .hint{color:var(--muted);font-size:13px;margin:0 0 12px 0}
+    @media (max-width: 920px){
+      main{grid-template-columns: 1fr}
+      nav{border-right:none;border-bottom:1px solid var(--border)}
+      .player{height:70vh}
     }
   </style>
 </head>
 <body>
 
-<header>🎮 St Eddies Unblocked Games</header>
+<header>
+  <button id="backBtn" class="back" title="Back">←</button>
+  <div>
+    <div class="title">St Eddies Unblocked</div>
+    <div class="sub" id="subLine">Games</div>
+  </div>
+</header>
 
-<div class="games">
-  <div class="game" onclick="loadGame('https://g.vseigru.net/10/3/20465/')">Slope</div>
-  <div class="game" onclick="loadGame('https://ubg77.github.io/run3/')">Run 3</div>
-  <div class="game" onclick="loadGame('https://ubg98.github.io/retro-bowl/')">Retro Bowl</div>
-  <div class="game" onclick="loadGame('https://ubg44.github.io/1v1lol/')">1v1.LOL</div>
-</div>
+<main>
+  <nav>
+    <div class="crumbs" id="crumbs">GAMES</div>
+    <div class="list" id="navList"></div>
+  </nav>
 
-<button onclick="closeGame()">⬅ Back to games</button>
+  <section class="content">
+    <p class="hint" id="hint">Pick a category on the left. Then pick a game.</p>
 
-<iframe id="gameFrame"></iframe>
+    <div class="grid" id="cards"></div>
+
+    <div class="player" id="player" style="display:none;margin-top:12px;">
+      <iframe id="frame" allowfullscreen></iframe>
+    </div>
+  </section>
+</main>
 
 <script>
-  function loadGame(url) {
-    document.querySelector('.games').style.display = 'none';
-    document.getElementById('gameFrame').style.display = 'block';
-    document.getElementById('gameFrame').src = url;
+  // --- Data model like Google Sites: Section -> Subsection -> Games ---
+  const TREE = {
+    name: "GAMES",
+    type: "section",
+    children: [
+      {
+        name: "Racing",
+        type: "section",
+        children: [
+          { name: "Bridge Race", type: "game", url: "https://ubg365.github.io/shortcut-race/play.html", tag: "ubg365" },
+          { name: "Crazy Cars", type: "game", url: "https://iliill1.github.io/CrazyCars/", tag: "github.io" },
+        ]
+      },
+      {
+        name: "Sports",
+        type: "section",
+        children: [
+          { name: "Penalty Shooters 2", type: "game", url: "https://ubg77.github.io/edit/penalty-shooters-2/", tag: "ubg77" },
+        ]
+      },
+      {
+        name: "Endless / Reflex",
+        type: "section",
+        children: [
+          { name: "Tunnel Rush 2", type: "game", url: "https://il11liiillli11.github.io/TunnelRush22/", tag: "github.io" },
+          { name: "Block Blast", type: "game", url: "https://reunbozdo.github.io", tag: "github.io" },
+        ]
+      }
+    ]
+  };
+
+  // --- Navigation stack for back arrow behaviour ---
+  const stack = [TREE]; // stack of nodes (sections)
+  let currentNode = TREE;
+  let currentGame = null;
+
+  const navList = document.getElementById("navList");
+  const crumbs = document.getElementById("crumbs");
+  const cards = document.getElementById("cards");
+  const backBtn = document.getElementById("backBtn");
+  const player = document.getElementById("player");
+  const frame = document.getElementById("frame");
+  const hint = document.getElementById("hint");
+  const subLine = document.getElementById("subLine");
+
+  function renderNav(){
+    navList.innerHTML = "";
+
+    // show only the current section's children that are sections
+    const sections = (currentNode.children || []).filter(x => x.type === "section");
+    sections.forEach(sec => {
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `<span>${sec.name}</span><span class="arrow">›</span>`;
+      div.onclick = () => {
+        stack.push(sec);
+        currentNode = sec;
+        currentGame = null;
+        renderAll();
+      };
+      navList.appendChild(div);
+    });
+
+    // If no subsections, show message
+    if(sections.length === 0){
+      const div = document.createElement("div");
+      div.style.color = "var(--muted)";
+      div.style.fontSize = "13px";
+      div.textContent = "No sub-sections here.";
+      navList.appendChild(div);
+    }
   }
 
-  function closeGame() {
-    document.querySelector('.games').style.display = 'grid';
-    document.getElementById('gameFrame').style.display = 'none';
-    document.getElementById('gameFrame').src = '';
+  function renderCrumbs(){
+    crumbs.textContent = stack.map(s => s.name).join("  ›  ");
+    backBtn.disabled = stack.length <= 1 && !currentGame;
+    subLine.textContent = currentGame ? currentGame.name : stack[stack.length - 1].name;
   }
+
+  function renderCards(){
+    cards.innerHTML = "";
+
+    const games = (currentNode.children || []).filter(x => x.type === "game");
+    if(currentGame){
+      hint.textContent = "Game loaded below. Press ← to go back.";
+      cards.style.display = "none";
+      player.style.display = "block";
+      return;
+    }
+
+    player.style.display = "none";
+    frame.src = "";
+    cards.style.display = "grid";
+
+    if(games.length === 0){
+      hint.textContent = "Open a sub-section on the left to see games.";
+      return;
+    }
+
+    hint.textContent = "Pick a game to play.";
+    games.forEach(g => {
+      const c = document.createElement("div");
+      c.className = "card";
+      c.innerHTML = `<div class="name">${g.name}</div><div class="tag">${g.tag || ""}</div>`;
+      c.onclick = () => {
+        currentGame = g;
+        frame.src = g.url;
+        renderAll();
+      };
+      cards.appendChild(c);
+    });
+  }
+
+  function renderAll(){
+    renderNav();
+    renderCrumbs();
+    renderCards();
+  }
+
+  backBtn.onclick = () => {
+    if(currentGame){
+      // If viewing a game, go back to games list (same section)
+      currentGame = null;
+      renderAll();
+      return;
+    }
+    // If in a subsection, pop back to parent
+    if(stack.length > 1){
+      stack.pop();
+      currentNode = stack[stack.length - 1];
+      renderAll();
+    }
+  };
+
+  renderAll();
 </script>
-
 </body>
-</html>          
+</html>
