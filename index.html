@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Correct site name -->
   <title>EduLink One</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
@@ -38,11 +37,11 @@
       z-index: -2;
     }
 
-    /* PANIC BANNER */
+    /* TOP PANIC BANNER */
     .panic-banner {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 5;
       background: #b00000;
       color: #fff;
       display: flex;
@@ -54,8 +53,24 @@
       font-size: 0.95rem;
     }
 
-    .panic-banner span {
-      opacity: 0.95;
+    .panic-banner button {
+      background: #fff;
+      color: #b00000;
+      border: none;
+      padding: 6px 14px;
+      font-weight: 900;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    .panic-banner button:hover {
+      transform: scale(1.08);
+    }
+
+    /* HIDE BANNER DURING STEALTH */
+    body.stealth .panic-banner {
+      display: none;
     }
 
     /* HEADER */
@@ -112,7 +127,7 @@
       box-shadow: 0 0 24px #39ff14;
     }
 
-    /* PANIC OVERLAY */
+    /* PANIC OVERLAY (STEALTH SCREEN) */
     #panicOverlay {
       position: fixed;
       inset: 0;
@@ -149,7 +164,9 @@
 
   <!-- PANIC BANNER -->
   <div class="panic-banner">
-    <span>Teacher coming? (Ctrl + E)</span>
+    <span>Teacher coming?</span>
+    <button id="panicBtn">PANIC</button>
+    <span style="opacity:.8;font-size:.85rem">Ctrl + E To Toggle</span>
   </div>
 
   <!-- HEADER -->
@@ -164,21 +181,23 @@
     <a href="apps.html"><button>📱 Apps</button></a>
   </div>
 
-  <!-- PANIC OVERLAY -->
+  <!-- STEALTH OVERLAY -->
   <div id="panicOverlay">
     <img src="assets/edulink_fake.png" alt="EduLink One Login">
   </div>
 
-  <!-- PANIC SCRIPT -->
+  <!-- STEALTH SCRIPT -->
   <script>
-    let panicActive = false;
+    let stealth = false;
     let muted = [];
 
-    function togglePanic() {
-      const overlay = document.getElementById("panicOverlay");
-      panicActive = !panicActive;
+    function toggleStealth() {
+      stealth = !stealth;
 
-      if (panicActive) {
+      const overlay = document.getElementById("panicOverlay");
+      document.body.classList.toggle("stealth", stealth);
+
+      if (stealth) {
         overlay.classList.add("active");
 
         muted = [];
@@ -197,12 +216,16 @@
       }
     }
 
+    // Ctrl + E toggle
     document.addEventListener("keydown", e => {
       if (e.ctrlKey && e.key.toLowerCase() === "e") {
         e.preventDefault();
-        togglePanic();
+        toggleStealth();
       }
     });
+
+    // Physical button
+    document.getElementById("panicBtn").onclick = toggleStealth;
   </script>
 
 </body>
