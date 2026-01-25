@@ -4,14 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Tab title -->
   <title>Edulink One</title>
-
-  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
   <style>
-    /* RESET */
     html, body {
       margin: 0;
       padding: 0;
@@ -22,31 +18,25 @@
       overflow-x: hidden;
     }
 
-    /* ANIMATED BACKGROUND (NO BARS) */
+    /* FULL PAGE ANIMATED BACKGROUND */
     .bg {
       position: fixed;
-      top: -5vh;
-      left: -5vw;
-      width: 110vw;
-      height: 110vh;
+      inset: -5vh -5vw;
       background: url("assets/purple_horizontal_clean_background.gif");
       background-size: cover;
       background-position: center;
+      z-index: -3;
+    }
+
+    /* LIGHT OVERLAY (NOT GREYED OUT) */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.18); /* lighter */
       z-index: -2;
     }
 
-    /* DARK OVERLAY */
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.4);
-      z-index: -1;
-    }
-
-    /* TOP PANIC BANNER (GOOGLE SITES STYLE) */
+    /* PANIC BANNER */
     .panic-banner {
       position: sticky;
       top: 0;
@@ -70,31 +60,32 @@
       font-weight: 900;
       border-radius: 8px;
       cursor: pointer;
-      transition: transform 0.15s;
     }
 
-    .panic-banner button:hover {
-      transform: scale(1.08);
-    }
-
-    /* HEADER */
+    /* HEADER WITH LOGO */
     header {
-      min-height: 300px;
+      min-height: 320px;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
+      align-items: center;
+      gap: 16px;
       text-align: center;
-      padding: 20px;
+    }
+
+    .logo {
+      width: 220px;
+      max-width: 80vw;
     }
 
     header h1 {
-      font-size: 2.5rem;
+      font-size: 2.4rem;
       color: #39ff14;
-      text-shadow: 0 0 14px #000;
+      text-shadow: 0 0 12px #000;
       margin: 0;
     }
 
-    /* MAIN MENU */
+    /* MENU */
     .menu {
       margin: 50px auto 70px;
       display: flex;
@@ -121,19 +112,13 @@
     }
 
     .menu button:hover {
-      transform: scale(1.1);
+      transform: scale(1.08);
       box-shadow: 0 0 24px #39ff14;
     }
 
-    /* MOBILE */
     @media (max-width: 700px) {
       header h1 {
         font-size: 2rem;
-      }
-
-      .menu button {
-        font-size: 1.4rem;
-        padding: 18px 36px;
       }
     }
   </style>
@@ -141,20 +126,21 @@
 
 <body>
 
-  <!-- BACKGROUND LAYERS -->
+  <!-- BACKGROUND -->
   <div class="bg"></div>
   <div class="overlay"></div>
 
-  <!-- PANIC BANNER -->
+  <!-- PANIC BAR -->
   <div class="panic-banner">
     <span>Teacher coming?</span>
-    <button onclick="window.location.href='https://www.edulinkone.com#!/login?code=stedwards'">
+    <button onclick="location.href='https://www.edulinkone.com#!/login?code=stedwards'">
       PANIC
     </button>
   </div>
 
   <!-- HEADER -->
   <header>
+    <img class="logo" src="assets/steddiesunblocked_logo_black_bg.gif" alt="St Eddies Unblocked Logo">
     <h1>Welcome to St Eddies Unblocked Games</h1>
   </header>
 
