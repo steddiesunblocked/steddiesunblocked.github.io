@@ -4,31 +4,62 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Tab title -->
   <title>Edulink One</title>
+
+  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
   <style>
-    body {
+    /* RESET */
+    html, body {
       margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
       font-family: Arial, Helvetica, sans-serif;
-      background: #000;
       color: #fff;
+      overflow-x: hidden;
     }
 
-    /* TOP PANIC BANNER */
+    /* ANIMATED BACKGROUND (NO BARS) */
+    .bg {
+      position: fixed;
+      top: -5vh;
+      left: -5vw;
+      width: 110vw;
+      height: 110vh;
+      background: url("assets/purple_horizontal_clean_background.gif");
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+    }
+
+    /* DARK OVERLAY */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.4);
+      z-index: -1;
+    }
+
+    /* TOP PANIC BANNER (GOOGLE SITES STYLE) */
     .panic-banner {
-      width: 100%;
-      background: #b00000;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      padding: 10px 14px;
-      font-weight: bold;
       position: sticky;
       top: 0;
       z-index: 9999;
+      background: #b00000;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      padding: 8px 12px;
+      font-weight: bold;
+      font-size: 0.95rem;
     }
 
     .panic-banner button {
@@ -48,13 +79,7 @@
 
     /* HEADER */
     header {
-      min-height: 320px;
-      background:
-        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
-        url("assets/steddiesunblocked_logo_black_bg.gif");
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
+      min-height: 300px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -63,19 +88,19 @@
     }
 
     header h1 {
-      font-size: 2.4rem;
+      font-size: 2.5rem;
       color: #39ff14;
-      text-shadow: 0 0 12px #000;
+      text-shadow: 0 0 14px #000;
       margin: 0;
     }
 
-    /* MAIN BUTTONS */
+    /* MAIN MENU */
     .menu {
       margin: 50px auto 70px;
       display: flex;
       justify-content: center;
+      gap: 24px;
       flex-wrap: wrap;
-      gap: 22px;
     }
 
     .menu a {
@@ -86,25 +111,41 @@
       background: #39ff14;
       color: #000;
       border: none;
-      padding: 22px 44px;
+      padding: 22px 46px;
       font-size: 1.6rem;
       font-weight: bold;
-      border-radius: 14px;
+      border-radius: 16px;
       cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
       min-width: 220px;
     }
 
     .menu button:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 22px #39ff14;
+      transform: scale(1.1);
+      box-shadow: 0 0 24px #39ff14;
+    }
+
+    /* MOBILE */
+    @media (max-width: 700px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .menu button {
+        font-size: 1.4rem;
+        padding: 18px 36px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- TOP BANNER -->
+  <!-- BACKGROUND LAYERS -->
+  <div class="bg"></div>
+  <div class="overlay"></div>
+
+  <!-- PANIC BANNER -->
   <div class="panic-banner">
     <span>Teacher coming?</span>
     <button onclick="window.location.href='https://www.edulinkone.com#!/login?code=stedwards'">
@@ -117,7 +158,7 @@
     <h1>Welcome to St Eddies Unblocked Games</h1>
   </header>
 
-  <!-- MAIN MENU -->
+  <!-- MENU -->
   <div class="menu">
     <a href="games.html"><button>🎮 Games</button></a>
     <a href="apps.html"><button>📱 Apps</button></a>
