@@ -1,0 +1,57 @@
+/* CORE BANNER */
+.panic-banner {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  background: linear-gradient(90deg, #6a00ff, #8f3dff);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 12px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,.35);
+}
+
+.panic-banner button {
+  background: white;
+  color: #6a00ff;
+  border: none;
+  padding: 6px 14px;
+  font-weight: 900;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.panic-banner .shortcut {
+  opacity: .8;
+  font-size: .85rem;
+}
+
+/* Hide banner in stealth */
+body.stealth .panic-banner {
+  display: none;
+}
+
+/* STEALTH OVERLAY */
+#panicOverlay {
+  position: fixed;
+  inset: 0;
+  background: #6f98c9;
+  display: none;
+  z-index: 100000;
+  align-items: center;
+  justify-content: center;
+}
+
+#panicOverlay.active {
+  display: flex;
+}
+
+#panicOverlay img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
