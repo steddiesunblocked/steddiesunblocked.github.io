@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
- <title>EduLink One</title>
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tab name -->
+  <title>Edulink One</title>
+
+  <!-- Favicon (put favicon.ico in the same folder as this file) -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
   <style>
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: black;
-      color: white;
+      background: #000;
+      color: #fff;
       text-align: center;
     }
 
     /* HEADER */
     header {
-      height: 300px;
-      background: 
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+      min-height: 320px;
+      background:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
         url("assets/steddiesunblocked_logo_black_bg.gif");
       background-size: contain;
       background-repeat: no-repeat;
@@ -27,34 +31,101 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 22px;
+    }
+
+    .header-inner {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
 
     header h1 {
-      font-size: 2.5rem;
+      margin: 0;
+      font-size: 2.2rem;
       color: #39ff14;
       text-shadow: 0 0 10px #000;
+      text-align: left;
     }
 
-    /* BUTTON SECTION */
-    .menu {
-      margin-top: 40px;
+    /* PANIC UI */
+    .panic-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0,0,0,0.35);
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(4px);
     }
 
-    .menu button {
-      background: #39ff14;
-      color: black;
+    .panic-label {
+      font-weight: 700;
+      font-size: 1rem;
+      opacity: 0.95;
+    }
+
+    .panic-btn {
+      background: #ff0000;
+      color: #fff;
       border: none;
-      padding: 20px 40px;
-      margin: 20px;
-      font-size: 1.5rem;
+      padding: 14px 22px;
+      font-size: 1.05rem;
+      font-weight: 800;
       border-radius: 12px;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.15s, box-shadow 0.15s;
     }
 
-    .menu button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 20px #39ff14;
+    .panic-btn:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 18px #ff0000;
+    }
+
+    /* MAIN BUTTONS */
+    .menu {
+      margin: 50px 0 70px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 22px;
+    }
+
+    .menu a {
+      text-decoration: none;
+    }
+
+    .menu .big-btn {
+      background: #39ff14;
+      color: #000;
+      border: none;
+      padding: 22px 44px;
+      font-size: 1.6rem;
+      font-weight: 800;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      min-width: 220px;
+    }
+
+    .menu .big-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 22px #39ff14;
+    }
+
+    /* MOBILE */
+    @media (max-width: 720px) {
+      .header-inner {
+        flex-direction: column;
+      }
+      header h1 {
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -62,12 +133,22 @@
 <body>
 
   <header>
-    <h1>Welcome to St Eddies Unblocked Games</h1>
+    <div class="header-inner">
+      <h1>Welcome to St Eddies Unblocked Games</h1>
+
+      <div class="panic-wrap">
+        <div class="panic-label">Teacher coming?</div>
+        <button class="panic-btn"
+          onclick="window.location.href='https://www.edulinkone.com#!/login?code=stedwards'">
+          PANIC
+        </button>
+      </div>
+    </div>
   </header>
 
   <div class="menu">
-    <button onclick="location.href='games.html'">🎮 Games</button>
-    <button onclick="location.href='apps.html'">📱 Apps</button>
+    <a href="games.html"><button class="big-btn">🎮 Games</button></a>
+    <a href="apps.html"><button class="big-btn">📱 Apps</button></a>
   </div>
 
 </body>
