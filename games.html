@@ -6,22 +6,12 @@
   <link rel="icon" href="/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <link rel="stylesheet" href="/core.css">
+
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #0b0b16;
-      color: #fff;
-    }
-
-    header {
-      padding: 30px 20px;
+    h1 {
       text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 2.4rem;
+      margin: 40px 0;
       color: #9d7bff;
     }
 
@@ -36,63 +26,35 @@
 
     .game {
       background: #16162a;
+      padding: 24px;
       border-radius: 18px;
-      padding: 26px 20px;
       text-align: center;
       cursor: pointer;
-      transition: transform .2s, box-shadow .2s;
-      border: 1px solid rgba(255,255,255,.08);
+      transition: transform .2s;
     }
 
     .game:hover {
       transform: translateY(-6px);
-      box-shadow: 0 0 25px rgba(157,123,255,.6);
-    }
-
-    .game h3 {
-      margin: 0;
-      font-size: 1.2rem;
-    }
-
-    .game span {
-      opacity: .75;
-      font-size: .9rem;
     }
   </style>
 </head>
 
-
 <body>
 
-<header>
-  <h1>Games</h1>
-</header>
+<h1>Games</h1>
 
-<section class="games">
-
-  <div class="game" onclick="play('2048')">
-    <h3>2048</h3>
-    <span>Puzzle</span>
-  </div>
-
-  <div class="game" onclick="play('archery-world-tour')">
-    <h3>Archery World Tour</h3>
-    <span>Skill</span>
-  </div>
-
-  <div class="game" onclick="play('4-colours')">
-    <h3>4 Colours</h3>
-    <span>Card</span>
-  </div>
-
-</section>
+<div class="games">
+  <div class="game" onclick="play('2048')">2048</div>
+  <div class="game" onclick="play('archery-world-tour')">Archery World Tour</div>
+  <div class="game" onclick="play('4-colours')">4 Colours</div>
+</div>
 
 <script>
   function play(game) {
-    window.location.href = "play.html?game=" + game;
+    location.href = "play.html?game=" + game;
   }
 </script>
-<script src="/core.js"></script>
 
+<script src="/core.js"></script>
 </body>
 </html>
