@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Correct site name -->
   <title>EduLink One</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
   <style>
+    /* RESET */
     html, body {
       margin: 0;
       padding: 0;
@@ -18,7 +20,7 @@
       overflow-x: hidden;
     }
 
-    /* FULL PAGE ANIMATED BACKGROUND */
+    /* ANIMATED BACKGROUND */
     .bg {
       position: fixed;
       inset: -5vh -5vw;
@@ -28,11 +30,11 @@
       z-index: -3;
     }
 
-    /* LIGHT OVERLAY (NOT GREYED OUT) */
+    /* LIGHT OVERLAY */
     .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.18); /* lighter */
+      background: rgba(0,0,0,0.18);
       z-index: -2;
     }
 
@@ -40,9 +42,9 @@
     .panic-banner {
       position: sticky;
       top: 0;
-      z-index: 9999;
+      z-index: 10;
       background: #b00000;
-      color: white;
+      color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -52,23 +54,17 @@
       font-size: 0.95rem;
     }
 
-    .panic-banner button {
-      background: white;
-      color: #b00000;
-      border: none;
-      padding: 6px 14px;
-      font-weight: 900;
-      border-radius: 8px;
-      cursor: pointer;
+    .panic-banner span {
+      opacity: 0.95;
     }
 
-    /* HEADER WITH LOGO */
+    /* HEADER */
     header {
       min-height: 320px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       gap: 16px;
       text-align: center;
     }
@@ -81,11 +77,11 @@
     header h1 {
       font-size: 2.4rem;
       color: #39ff14;
-      text-shadow: 0 0 12px #000;
+      text-shadow: 0 0 14px #000;
       margin: 0;
     }
 
-    /* MENU */
+    /* MAIN MENU */
     .menu {
       margin: 50px auto 70px;
       display: flex;
@@ -116,6 +112,27 @@
       box-shadow: 0 0 24px #39ff14;
     }
 
+    /* PANIC OVERLAY */
+    #panicOverlay {
+      position: fixed;
+      inset: 0;
+      background: #6f98c9;
+      display: none;
+      z-index: 999999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #panicOverlay.active {
+      display: flex;
+    }
+
+    #panicOverlay img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
     @media (max-width: 700px) {
       header h1 {
         font-size: 2rem;
@@ -123,15 +140,6 @@
     }
   </style>
 </head>
-<script>
-  document.addEventListener("keydown", function (e) {
-    // Ctrl + E panic shortcut
-    if (e.ctrlKey && e.key.toLowerCase() === "e") {
-      e.preventDefault(); // stop browser default
-      window.location.href = "https://www.edulinkone.com#!/login?code=stedwards";
-    }
-  });
-</script>
 
 <body>
 
@@ -139,18 +147,14 @@
   <div class="bg"></div>
   <div class="overlay"></div>
 
-  <!-- PANIC BAR -->
+  <!-- PANIC BANNER -->
   <div class="panic-banner">
-    <span>Teacher coming?</span>
-    <button onclick="location.href='https://www.edulinkone.com#!/login?code=stedwards'">
-      PANIC
-    </button>
-    <span>Or just Press Ctrl + E</span>
+    <span>Teacher coming? (Ctrl + E)</span>
   </div>
 
   <!-- HEADER -->
   <header>
-   <img class="logo" src="assets/steddiesunblocked_logo_pulse.gif" alt="St Eddies Unblocked Logo">
+    <img class="logo" src="assets/steddiesunblocked_logo_pulse.gif" alt="Logo">
     <h1>Welcome to St Eddies Unblocked Games</h1>
   </header>
 
@@ -159,6 +163,47 @@
     <a href="games.html"><button>🎮 Games</button></a>
     <a href="apps.html"><button>📱 Apps</button></a>
   </div>
+
+  <!-- PANIC OVERLAY -->
+  <div id="panicOverlay">
+    <img src="assets/edulink_fake.png" alt="EduLink One Login">
+  </div>
+
+  <!-- PANIC SCRIPT -->
+  <script>
+    let panicActive = false;
+    let muted = [];
+
+    function togglePanic() {
+      const overlay = document.getElementById("panicOverlay");
+      panicActive = !panicActive;
+
+      if (panicActive) {
+        overlay.classList.add("active");
+
+        muted = [];
+        document.querySelectorAll("audio, video").forEach(el => {
+          muted.push({ el, muted: el.muted, volume: el.volume });
+          el.muted = true;
+          el.volume = 0;
+        });
+      } else {
+        overlay.classList.remove("active");
+
+        muted.forEach(item => {
+          item.el.muted = item.muted;
+          item.el.volume = item.volume;
+        });
+      }
+    }
+
+    document.addEventListener("keydown", e => {
+      if (e.ctrlKey && e.key.toLowerCase() === "e") {
+        e.preventDefault();
+        togglePanic();
+      }
+    });
+  </script>
 
 </body>
 </html>
