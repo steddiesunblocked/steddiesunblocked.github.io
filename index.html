@@ -123,6 +123,15 @@
     }
   </style>
 </head>
+<script>
+  document.addEventListener("keydown", function (e) {
+    // Ctrl + E panic shortcut
+    if (e.ctrlKey && e.key.toLowerCase() === "e") {
+      e.preventDefault(); // stop browser default
+      window.location.href = "https://www.edulinkone.com#!/login?code=stedwards";
+    }
+  });
+</script>
 
 <body>
 
@@ -136,6 +145,7 @@
     <button onclick="location.href='https://www.edulinkone.com#!/login?code=stedwards'">
       PANIC
     </button>
+    <span>Or just Press Ctrl + E</span>
   </div>
 
   <!-- HEADER -->
