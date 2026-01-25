@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Tab name -->
   <title>Edulink One</title>
-
-  <!-- Favicon (put favicon.ico in the same folder as this file) -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
   <style>
     body {
@@ -16,7 +13,37 @@
       font-family: Arial, Helvetica, sans-serif;
       background: #000;
       color: #fff;
-      text-align: center;
+    }
+
+    /* TOP PANIC BANNER */
+    .panic-banner {
+      width: 100%;
+      background: #b00000;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 10px 14px;
+      font-weight: bold;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+    }
+
+    .panic-banner button {
+      background: white;
+      color: #b00000;
+      border: none;
+      padding: 6px 14px;
+      font-weight: 900;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    .panic-banner button:hover {
+      transform: scale(1.08);
     }
 
     /* HEADER */
@@ -31,65 +58,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 22px;
-    }
-
-    .header-inner {
-      width: 100%;
-      max-width: 1100px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+      text-align: center;
+      padding: 20px;
     }
 
     header h1 {
-      margin: 0;
-      font-size: 2.2rem;
+      font-size: 2.4rem;
       color: #39ff14;
-      text-shadow: 0 0 10px #000;
-      text-align: left;
-    }
-
-    /* PANIC UI */
-    .panic-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      background: rgba(0,0,0,0.35);
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.12);
-      backdrop-filter: blur(4px);
-    }
-
-    .panic-label {
-      font-weight: 700;
-      font-size: 1rem;
-      opacity: 0.95;
-    }
-
-    .panic-btn {
-      background: #ff0000;
-      color: #fff;
-      border: none;
-      padding: 14px 22px;
-      font-size: 1.05rem;
-      font-weight: 800;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-
-    .panic-btn:hover {
-      transform: scale(1.07);
-      box-shadow: 0 0 18px #ff0000;
+      text-shadow: 0 0 12px #000;
+      margin: 0;
     }
 
     /* MAIN BUTTONS */
     .menu {
-      margin: 50px 0 70px;
+      margin: 50px auto 70px;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
@@ -100,55 +82,45 @@
       text-decoration: none;
     }
 
-    .menu .big-btn {
+    .menu button {
       background: #39ff14;
       color: #000;
       border: none;
       padding: 22px 44px;
       font-size: 1.6rem;
-      font-weight: 800;
+      font-weight: bold;
       border-radius: 14px;
       cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
       min-width: 220px;
     }
 
-    .menu .big-btn:hover {
+    .menu button:hover {
       transform: scale(1.08);
       box-shadow: 0 0 22px #39ff14;
-    }
-
-    /* MOBILE */
-    @media (max-width: 720px) {
-      .header-inner {
-        flex-direction: column;
-      }
-      header h1 {
-        text-align: center;
-      }
     }
   </style>
 </head>
 
 <body>
 
-  <header>
-    <div class="header-inner">
-      <h1>Welcome to St Eddies Unblocked Games</h1>
+  <!-- TOP BANNER -->
+  <div class="panic-banner">
+    <span>Teacher coming?</span>
+    <button onclick="window.location.href='https://www.edulinkone.com#!/login?code=stedwards'">
+      PANIC
+    </button>
+  </div>
 
-      <div class="panic-wrap">
-        <div class="panic-label">Teacher coming?</div>
-        <button class="panic-btn"
-          onclick="window.location.href='https://www.edulinkone.com#!/login?code=stedwards'">
-          PANIC
-        </button>
-      </div>
-    </div>
+  <!-- HEADER -->
+  <header>
+    <h1>Welcome to St Eddies Unblocked Games</h1>
   </header>
 
+  <!-- MAIN MENU -->
   <div class="menu">
-    <a href="games.html"><button class="big-btn">🎮 Games</button></a>
-    <a href="apps.html"><button class="big-btn">📱 Apps</button></a>
+    <a href="games.html"><button>🎮 Games</button></a>
+    <a href="apps.html"><button>📱 Apps</button></a>
   </div>
 
 </body>
