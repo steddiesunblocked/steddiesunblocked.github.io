@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/favicon.ico">
 
-  <!-- Core site UI -->
+  <!-- Core site UI (panic banner + Ctrl+E) -->
   <link rel="stylesheet" href="/core.css">
 
   <style>
@@ -17,7 +17,13 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
-    /* PAGE LAYOUT */
+    .title {
+      text-align: center;
+      margin: 20px 0 10px;
+      font-size: 1.6rem;
+      color: #9d7bff;
+    }
+
     .layout {
       display: grid;
       grid-template-columns: 1fr 960px 1fr;
@@ -31,7 +37,6 @@
       }
     }
 
-    /* GAME BOX */
     .game-box {
       background: black;
       border-radius: 12px;
@@ -46,7 +51,6 @@
       border: none;
     }
 
-    /* SIDE PANELS */
     .side {
       display: flex;
       flex-direction: column;
@@ -86,14 +90,6 @@
     .game-link span {
       font-weight: bold;
     }
-
-    /* TITLE BAR */
-    .title {
-      text-align: center;
-      margin: 20px 0 10px;
-      font-size: 1.6rem;
-      color: #39ff14;
-    }
   </style>
 </head>
 
@@ -103,7 +99,7 @@
 
 <div class="layout">
 
-  <!-- LEFT SUGGESTIONS -->
+  <!-- LEFT -->
   <div class="side">
     <h3>More Games</h3>
 
@@ -111,23 +107,18 @@
       <img src="/images/favicon.ico">
       <span>2048</span>
     </div>
-
-    <div class="game-link" onclick="go('archery-world-tour')">
-      <img src="/images/archery world tour.png">
-      <span>Archery World Tour</span>
-    </div>
   </div>
 
   <!-- GAME -->
   <div class="game-box" id="gameBox"></div>
 
-  <!-- RIGHT SUGGESTIONS -->
+  <!-- RIGHT -->
   <div class="side">
     <h3>Try Also</h3>
 
-    <div class="game-link" onclick="go('4-colours')">
+    <div class="game-link" onclick="go('4-colors')">
       <img src="/images/Four-Colors.webp">
-      <span>4 Colours</span>
+      <span>4 Colors</span>
     </div>
   </div>
 
@@ -139,13 +130,9 @@
       title: "2048",
       src: "/games/2048/index.html"
     },
-    "archery-world-tour": {
-      title: "Archery World Tour",
-      src: "/games/archery-world-tour/index.html"
-    },
-    "4-colours": {
-      title: "4 Colours",
-      src: "/games/4-colours/index.html"
+    "4-colors": {
+      title: "4 Colors",
+      src: "/games/4-colors/index.html"
     }
   };
 
