@@ -6,145 +6,165 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/favicon.ico">
 
-  <!-- Ruffle for SWF -->
-  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
-
-  <!-- Core site UI (panic banner + Ctrl+E) -->
+  <!-- Core site UI -->
   <link rel="stylesheet" href="/core.css">
 
   <style>
-    html, body {
+    body {
       margin: 0;
-      height: 100%;
       background: #0b0b16;
-      overflow: hidden;
-      font-family: Arial, Helvetica, sans-serif;
       color: white;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
-    /* TOP BAR */
-    #topbar {
-      height: 48px;
-      background: linear-gradient(90deg, #6a00ff, #8f3dff);
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 0 14px;
-      font-weight: bold;
-      z-index: 2;
+    /* PAGE LAYOUT */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 960px 1fr;
+      gap: 20px;
+      padding: 20px;
     }
 
-    #topbar button {
-      background: white;
-      color: #6a00ff;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
+    @media (max-width: 1200px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
     }
 
-    #title {
-      flex: 1;
-      text-align: center;
-    }
-
-    /* GAME AREA */
-    #gameArea {
-      height: calc(100% - 48px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    /* GAME BOX */
+    .game-box {
       background: black;
-    }
-
-    #gameContainer {
-      width: 960px;
-      height: 540px;
-      background: black;
+      border-radius: 12px;
       border: 4px solid #222;
+      overflow: hidden;
+      height: 540px;
     }
 
-    iframe, ruffle-player {
+    iframe {
       width: 100%;
       height: 100%;
       border: none;
     }
 
-    /* RESPONSIVE */
-    @media (max-width: 1000px) {
-      #gameContainer {
-        width: 100%;
-        height: 100%;
-        border: none;
-      }
+    /* SIDE PANELS */
+    .side {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .side h3 {
+      margin: 0;
+      color: #9d7bff;
+      text-align: center;
+    }
+
+    .game-link {
+      background: #16162a;
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .game-link:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 18px rgba(157,123,255,.6);
+    }
+
+    .game-link img {
+      width: 64px;
+      height: 64px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #000;
+    }
+
+    .game-link span {
+      font-weight: bold;
+    }
+
+    /* TITLE BAR */
+    .title {
+      text-align: center;
+      margin: 20px 0 10px;
+      font-size: 1.6rem;
+      color: #39ff14;
     }
   </style>
 </head>
 
 <body>
 
-<!-- TOP BAR -->
-<div id="topbar">
-  <button onclick="history.back()">← Games</button>
-  <div id="title">Loading…</div>
-  <button onclick="goFullscreen()">⛶</button>
-</div>
+<div class="title" id="title">Loading…</div>
 
-<!-- GAME -->
-<div id="gameArea">
-  <div id="gameContainer"></div>
+<div class="layout">
+
+  <!-- LEFT SUGGESTIONS -->
+  <div class="side">
+    <h3>More Games</h3>
+
+    <div class="game-link" onclick="go('2048')">
+      <img src="/images/favicon.ico">
+      <span>2048</span>
+    </div>
+
+    <div class="game-link" onclick="go('archery-world-tour')">
+      <img src="/images/archery world tour.png">
+      <span>Archery World Tour</span>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div class="game-box" id="gameBox"></div>
+
+  <!-- RIGHT SUGGESTIONS -->
+  <div class="side">
+    <h3>Try Also</h3>
+
+    <div class="game-link" onclick="go('4-colours')">
+      <img src="/images/Four-Colors.webp">
+      <span>4 Colours</span>
+    </div>
+  </div>
+
 </div>
 
 <script>
   const games = {
     "2048": {
-      type: "html5",
+      title: "2048",
       src: "/games/2048/index.html"
     },
     "archery-world-tour": {
-      type: "html5",
+      title: "Archery World Tour",
       src: "/games/archery-world-tour/index.html"
     },
     "4-colours": {
-      type: "html5",
+      title: "4 Colours",
       src: "/games/4-colours/index.html"
     }
-    // later: swf games here
   };
 
   const params = new URLSearchParams(location.search);
-  const gameKey = params.get("game");
-  const game = games[gameKey];
-  const container = document.getElementById("gameContainer");
+  const key = params.get("game") || "2048";
+  const game = games[key];
 
-  if (!game) {
-    document.getElementById("title").textContent = "Game not found";
-  } else {
-    document.getElementById("title").textContent =
-      gameKey.replace(/-/g, " ");
+  document.getElementById("title").textContent = game.title;
 
-    if (game.type === "html5") {
-      const iframe = document.createElement("iframe");
-      iframe.src = game.src;
-      iframe.allowFullscreen = true;
-      container.appendChild(iframe);
-    }
+  const iframe = document.createElement("iframe");
+  iframe.src = game.src;
+  iframe.allowFullscreen = true;
+  document.getElementById("gameBox").appendChild(iframe);
 
-    if (game.type === "swf") {
-      const ruffle = document.createElement("ruffle-player");
-      ruffle.setAttribute("src", game.src);
-      container.appendChild(ruffle);
-    }
-  }
-
-  function goFullscreen() {
-    const el = document.getElementById("gameContainer");
-    if (el.requestFullscreen) el.requestFullscreen();
+  function go(game) {
+    location.href = "play.html?game=" + game;
   }
 </script>
 
-<!-- CORE PANIC SYSTEM -->
 <script src="/core.js"></script>
 </body>
 </html>
