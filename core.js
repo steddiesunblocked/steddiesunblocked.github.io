@@ -1,59 +1,70 @@
-// ===== CORE UI INJECTION =====
+/* =========================
+   STEALTH AUDIO KILL SYSTEM
+   ========================= */
 
-// Inject banner + overlay
-document.body.insertAdjacentHTML("afterbegin", `
-  <div class="panic-banner">
-    <span>Teacher coming?</span>
-    <button id="panicBtn">PANIC</button>
-    <span class="shortcut">(Ctrl + E)</span>
-  </div>
+let stealthActive = false;
+const audioContexts = [];
 
-  <div id="panicOverlay">
-    <img src="assets/edulink_fake.png" alt="EduLink One Login">
-  </div>
-`);
+/* Hijack WebAudio so games can't bypass mute */
+(() => {
+  const OriginalAC = window.AudioContext || window.webkitAudioContext;
+  if (!OriginalAC) return;
 
-// State
-let stealth = false;
-let muted = [];
+  window.AudioContext = window.webkitAudioContext = function () {
+    const ctx = new OriginalAC();
+    audioContexts.push(ctx);
+    if (stealthActive) ctx.suspend();
+    return ctx;
+  };
+})();
 
-// Toggle stealth
+/* Hard mute EVERYTHING */
+function muteAllAudio() {
+  // audio + video tags
+  document.querySelectorAll("audio, video").forEach(el => {
+    el.muted = true;
+    el.pause?.();
+  });
+
+  // iframes (best-effort)
+  document.querySelectorAll("iframe").forEach(f => {
+    try {
+      f.contentWindow.postMessage({ mute: true }, "*");
+    } catch {}
+  });
+
+  // WebAudio
+  audioContexts.forEach(ctx => {
+    if (ctx.state === "running") ctx.suspend();
+  });
+}
+
+/* Resume audio */
+function unmuteAllAudio() {
+  document.querySelectorAll("audio, video").forEach(el => {
+    el.muted = false;
+  });
+
+  audioContexts.forEach(ctx => {
+    if (ctx.state === "suspended") ctx.resume();
+  });
+}
+
+/* Toggle stealth */
 function toggleStealth() {
-  stealth = !stealth;
-  document.body.classList.toggle("stealth", stealth);
+  stealthActive = !stealthActive;
 
-  const overlay = document.getElementById("panicOverlay");
-
-  if (stealth) {
-    overlay.classList.add("active");
-
-    muted = [];
-    document.querySelectorAll("audio, video").forEach(el => {
-      muted.push({ el, muted: el.muted, volume: el.volume });
-      el.muted = true;
-      el.volume = 0;
-    });
+  if (stealthActive) {
+    muteAllAudio();
   } else {
-    overlay.classList.remove("active");
-
-    muted.forEach(item => {
-      item.el.muted = item.muted;
-      item.el.volume = item.volume;
-    });
+    unmuteAllAudio();
   }
 }
 
-// Ctrl + E
+/* Keyboard shortcut */
 document.addEventListener("keydown", e => {
   if (e.ctrlKey && e.key.toLowerCase() === "e") {
     e.preventDefault();
-    toggleStealth();
-  }
-});
-
-// Button
-document.addEventListener("click", e => {
-  if (e.target && e.target.id === "panicBtn") {
     toggleStealth();
   }
 });
