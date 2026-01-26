@@ -1,45 +1,45 @@
-/* =========================
-   STEALTH AUDIO KILL SYSTEM
-   ========================= */
+/* =====================
+   CORE STEALTH SYSTEM
+   ===================== */
 
 let stealthActive = false;
 const audioContexts = [];
 
-/* Hijack WebAudio so games can't bypass mute */
-(() => {
-  const OriginalAC = window.AudioContext || window.webkitAudioContext;
-  if (!OriginalAC) return;
+/* ----- UI ----- */
+function showStealthOverlay() {
+  document.body.classList.add("stealth");
+  document.getElementById("stealthOverlay").style.display = "block";
+}
+
+function hideStealthOverlay() {
+  document.body.classList.remove("stealth");
+  document.getElementById("stealthOverlay").style.display = "none";
+}
+
+/* ----- AUDIO KILL ----- */
+(function () {
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return;
 
   window.AudioContext = window.webkitAudioContext = function () {
-    const ctx = new OriginalAC();
+    const ctx = new AC();
     audioContexts.push(ctx);
     if (stealthActive) ctx.suspend();
     return ctx;
   };
 })();
 
-/* Hard mute EVERYTHING */
 function muteAllAudio() {
-  // audio + video tags
   document.querySelectorAll("audio, video").forEach(el => {
     el.muted = true;
     el.pause?.();
   });
 
-  // iframes (best-effort)
-  document.querySelectorAll("iframe").forEach(f => {
-    try {
-      f.contentWindow.postMessage({ mute: true }, "*");
-    } catch {}
-  });
-
-  // WebAudio
   audioContexts.forEach(ctx => {
     if (ctx.state === "running") ctx.suspend();
   });
 }
 
-/* Resume audio */
 function unmuteAllAudio() {
   document.querySelectorAll("audio, video").forEach(el => {
     el.muted = false;
@@ -50,18 +50,24 @@ function unmuteAllAudio() {
   });
 }
 
-/* Toggle stealth */
-function toggleStealth() {
-  stealthActive = !stealthActive;
-
-  if (stealthActive) {
-    muteAllAudio();
-  } else {
-    unmuteAllAudio();
-  }
+/* ----- TOGGLE ----- */
+function enableStealth() {
+  stealthActive = true;
+  muteAllAudio();
+  showStealthOverlay();
 }
 
-/* Keyboard shortcut */
+function disableStealth() {
+  stealthActive = false;
+  unmuteAllAudio();
+  hideStealthOverlay();
+}
+
+function toggleStealth() {
+  stealthActive ? disableStealth() : enableStealth();
+}
+
+/* ----- KEYBIND ----- */
 document.addEventListener("keydown", e => {
   if (e.ctrlKey && e.key.toLowerCase() === "e") {
     e.preventDefault();
