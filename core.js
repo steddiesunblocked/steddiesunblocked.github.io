@@ -73,4 +73,43 @@ document.addEventListener("keydown", e => {
     e.preventDefault();
     toggleStealth();
   }
+/* ===== AUDIO STEALTH ADDON ===== */
+
+const audioContexts = [];
+let stealthActive = false;
+
+/* Hijack WebAudio */
+(() => {
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return;
+
+  window.AudioContext = window.webkitAudioContext = function () {
+    const ctx = new AC();
+    audioContexts.push(ctx);
+    if (stealthActive) ctx.suspend();
+    return ctx;
+  };
+})();
+
+function muteAllAudio() {
+  document.querySelectorAll("audio, video").forEach(el => {
+    el.muted = true;
+    el.pause?.();
+  });
+
+  audioContexts.forEach(ctx => {
+    if (ctx.state === "running") ctx.suspend();
+  });
+}
+
+function unmuteAllAudio() {
+  document.querySelectorAll("audio, video").forEach(el => {
+    el.muted = false;
+  });
+
+  audioContexts.forEach(ctx => {
+    if (ctx.state === "suspended") ctx.resume();
+  });
+}
+
 });
