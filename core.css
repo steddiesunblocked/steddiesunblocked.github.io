@@ -54,8 +54,7 @@ body {
   z-index: 10000;
   display: none;
 
-  /* 👇 THIS WAS MISSING */
-  background-image: url("/images/stealth.png"); /* or whatever image you used */
+  background-image: url("./assets/edulink_fake.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
