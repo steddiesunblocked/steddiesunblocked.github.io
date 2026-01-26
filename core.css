@@ -51,10 +51,16 @@ body {
 #stealthOverlay {
   position: fixed;
   inset: 0;
-  background: white;
   z-index: 10000;
   display: none;
+
+  /* 👇 THIS WAS MISSING */
+  background-image: url("/images/stealth.png"); /* or whatever image you used */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
+
 
 /* ===== PAGE CONTENT OFFSET ===== */
 .core-offset {
