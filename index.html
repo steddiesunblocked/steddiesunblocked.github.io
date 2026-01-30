@@ -1,34 +1,344 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>EduLink One</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>St Eddies Unblocked</title>
 
-  <!-- CORE CSS -->
-  <link rel="stylesheet" href="./core.css">
+  <style>
+    /* ===== RESET ===== */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { height:100%; }
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    /* ===== BACKGROUND ===== */
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: #fff;
+      background: url("/assets/purple_horizontal_clean_background.gif") center/cover no-repeat fixed;
+      overflow-x: hidden;
+    }
+
+    /* ===== CORE BANNER ===== */
+    #coreBanner{
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      background: rgba(10, 6, 22, 0.78);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      z-index: 9999;
+    }
+
+    #brandLeft{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 220px;
+    }
+
+    #brandLeft img{
+      height: 34px;
+      width: auto;
+      image-rendering: auto;
+    }
+
+    #bannerTitle{
+      font-weight: 700;
+      font-size: 14px;
+      opacity: 0.95;
+      white-space: nowrap;
+    }
+
+    #bannerRight{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .pill{
+      height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 650;
+      font-size: 13px;
+    }
+    .pill:hover{ background: rgba(255,255,255,0.10); }
+
+    .danger{
+      border-color: rgba(255, 80, 80, 0.35);
+      background: rgba(255, 80, 80, 0.16);
+    }
+    .danger:hover{ background: rgba(255, 80, 80, 0.22); }
+
+    /* ===== LAYOUT ===== */
+    #app{
+      padding-top: 54px; /* space for banner */
+      min-height: 100%;
+    }
+
+    .wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 14px 48px;
+    }
+
+    /* ===== HERO ===== */
+    #hero{
+      display:flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 0 10px;
+    }
+
+    #heroLogo{
+      width: min(420px, 78vw);
+      height: auto;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.35));
+    }
+
+    #searchRow{
+      width: min(760px, 96vw);
+      display:flex;
+      gap:10px;
+      margin-top: 8px;
+    }
+
+    #searchInput{
+      flex:1;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(10, 6, 22, 0.55);
+      color: #fff;
+      padding: 0 12px;
+      outline: none;
+      backdrop-filter: blur(10px);
+    }
+
+    #searchInput::placeholder{ color: rgba(255,255,255,0.65); }
+
+    #searchBtn{
+      height: 44px;
+      border-radius: 12px;
+      padding: 0 14px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    #searchBtn:hover{ background: rgba(255,255,255,0.12); }
+
+    /* ===== CATEGORY BAR ===== */
+    #cats{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      justify-content:center;
+      margin: 14px 0 18px;
+    }
+
+    .catBtn{
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(10, 6, 22, 0.45);
+      cursor:pointer;
+      font-weight: 700;
+      font-size: 13px;
+      color:#fff;
+      backdrop-filter: blur(10px);
+    }
+    .catBtn.active{
+      background: rgba(255,255,255,0.12);
+    }
+
+    /* ===== GRID ===== */
+    #grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .tile{
+      display:block;
+      text-decoration:none;
+      color:#fff;
+      border-radius: 16px;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(10, 6, 22, 0.45);
+      backdrop-filter: blur(10px);
+      transition: transform .08s ease, background .12s ease;
+      min-height: 86px;
+    }
+    .tile:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .tileTitle{ font-weight: 800; margin-bottom: 6px; }
+    .tileDesc{ opacity: 0.85; font-size: 13px; }
+
+    /* ===== STEALTH MODE ===== */
+    body.stealth #app{ display:none; }
+
+    #stealthFrame{
+      display:none;
+      position: fixed;
+      inset: 0;
+      border: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      z-index: 9998;
+    }
+    body.stealth #stealthFrame{ display:block; }
+
+    /* mobile tweaks */
+    @media (max-width: 520px){
+      #bannerTitle{ display:none; }
+      #brandLeft{ min-width: unset; }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Fake EduLink / stealth overlay -->
+  <iframe id="stealthFrame" title="EduLink" src="/assets/edulink_fake.png"></iframe>
 
-<!-- TOP BANNER -->
-<div id="coreBanner">
-  <span>Welcome to EduLink One</span>
-  <button id="panicBtn" onclick="toggleStealth()">Panic</button>
-</div>
+  <!-- Core banner -->
+  <div id="coreBanner">
+    <div id="brandLeft">
+      <img src="/assets/steddiesunblocked_logo_pulse.gif" alt="logo">
+      <div id="bannerTitle">St Eddies Unblocked</div>
+    </div>
 
-<!-- STEALTH OVERLAY -->
-<div id="stealthOverlay"></div>
+    <div id="bannerRight">
+      <button class="pill" id="stealthBtn" title="Ctrl+E">Stealth</button>
+      <button class="pill danger" id="panicBtn" title="Instant redirect">Panic</button>
+    </div>
+  </div>
 
-<!-- MAIN CONTENT -->
-<div class="core-offset">
-  <h1>Home</h1>
-  <p>If you can read this on a purple background, CSS is working.</p>
-</div>
+  <!-- App -->
+  <div id="app">
+    <div class="wrap">
+      <div id="hero">
+        <img id="heroLogo" src="/assets/steddiesunblocked_logo_pulse.gif" alt="St Eddies Unblocked">
 
-<!-- CORE JS -->
-<script src="./core.js"></script>
+        <div id="searchRow">
+          <input id="searchInput" placeholder="Search games/apps… (filters tiles)" autocomplete="off">
+          <button id="searchBtn">Search</button>
+        </div>
 
+        <div id="cats">
+          <button class="catBtn active" data-cat="all">All</button>
+          <button class="catBtn" data-cat="games">Games</button>
+          <button class="catBtn" data-cat="apps">Apps</button>
+          <button class="catBtn" data-cat="tools">Tools</button>
+        </div>
+      </div>
+
+      <div id="grid">
+        <!-- SAMPLE TILES: replace links with your real ones -->
+        <a class="tile" data-cat="games" href="https://example.com/game1" target="_blank" rel="noopener">
+          <div class="tileTitle">Penalty Shooters 2</div>
+          <div class="tileDesc">Quick football shootout game.</div>
+        </a>
+
+        <a class="tile" data-cat="games" href="https://example.com/game2" target="_blank" rel="noopener">
+          <div class="tileTitle">Shortcut Race</div>
+          <div class="tileDesc">Race + build shortcuts.</div>
+        </a>
+
+        <a class="tile" data-cat="apps" href="https://example.com/app1" target="_blank" rel="noopener">
+          <div class="tileTitle">YouTube</div>
+          <div class="tileDesc">Open video site.</div>
+        </a>
+
+        <a class="tile" data-cat="tools" href="https://example.com/tool1" target="_blank" rel="noopener">
+          <div class="tileTitle">Proxy / Mirror</div>
+          <div class="tileDesc">Useful links bucket.</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const body = document.body;
+    const stealthBtn = document.getElementById("stealthBtn");
+    const panicBtn = document.getElementById("panicBtn");
+    const searchInput = document.getElementById("searchInput");
+    const searchBtn = document.getElementById("searchBtn");
+    const tiles = Array.from(document.querySelectorAll(".tile"));
+    const catBtns = Array.from(document.querySelectorAll(".catBtn"));
+    const stealthFrame = document.getElementById("stealthFrame");
+
+    // --- Stealth toggle ---
+    function setStealth(on){
+      body.classList.toggle("stealth", on);
+      // If you want the fake edulink to be an actual HTML page later, swap src here.
+      // For now it points at the PNG in /assets (browser will show it).
+    }
+
+    stealthBtn.addEventListener("click", () => {
+      setStealth(!body.classList.contains("stealth"));
+    });
+
+    // Ctrl+E toggles stealth, Esc exits
+    window.addEventListener("keydown", (e) => {
+      if (e.ctrlKey && (e.key === "e" || e.key === "E")) {
+        e.preventDefault();
+        setStealth(!body.classList.contains("stealth"));
+      }
+      if (e.key === "Escape") setStealth(false);
+    });
+
+    // --- Panic: instant "normal" looking page ---
+    // Uses your edulink fake image as a believable cover.
+    panicBtn.addEventListener("click", () => {
+      // quickest: go stealth and scroll to top
+      window.scrollTo(0,0);
+      setStealth(true);
+    });
+
+    // --- Filtering (search + category) ---
+    let activeCat = "all";
+
+    function applyFilters(){
+      const q = searchInput.value.trim().toLowerCase();
+      tiles.forEach(t => {
+        const cat = t.getAttribute("data-cat");
+        const text = (t.innerText || "").toLowerCase();
+        const matchCat = (activeCat === "all") || (cat === activeCat);
+        const matchQ = (!q) || text.includes(q);
+        t.style.display = (matchCat && matchQ) ? "block" : "none";
+      });
+    }
+
+    catBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        catBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeCat = btn.dataset.cat;
+        applyFilters();
+      });
+    });
+
+    searchInput.addEventListener("input", applyFilters);
+    searchBtn.addEventListener("click", applyFilters);
+
+    // init
+    applyFilters();
+  </script>
 </body>
 </html>
