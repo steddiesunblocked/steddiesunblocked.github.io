@@ -1,176 +1,151 @@
 <!doctype html>
 <html lang="en">
 <head>
-
 <meta charset="utf-8">
 <title>St Eddies Unblocked Games</title>
 
-<link rel="icon" href="/games/2048/favicon.ico">
+<!-- Main site favicon -->
+<link rel="icon" href="favicon.ico">
 
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
+<!-- Core CSS -->
 <style>
-
-body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#0f0f0f;
-color:white;
+/* Background GIF and main layout */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: url('/assets/background.gif') center center / cover no-repeat;
+  color: white;
 }
 
-header{
-text-align:center;
-padding:30px 10px;
+/* Top banner with logo */
+header {
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
 }
 
-.logo{
-font-size:38px;
-font-weight:bold;
+.logo {
+  font-size: 36px;
+  font-weight: bold;
 }
 
-.search{
-margin-top:15px;
+.search input {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  font-size: 16px;
 }
 
-.search input{
-width:300px;
-max-width:80%;
-padding:10px;
-border-radius:6px;
-border:none;
-font-size:16px;
+/* Game grid */
+.games {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px,1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 30px auto;
 }
 
-.games{
-padding:30px;
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
-gap:20px;
-max-width:1000px;
-margin:auto;
+.game {
+  background: rgba(0,0,0,0.7);
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.game{
-background:#1a1a1a;
-padding:15px;
-border-radius:10px;
-text-align:center;
-cursor:pointer;
-transition:.2s;
+.game:hover {
+  transform: scale(1.05);
+  background: rgba(50,50,50,0.9);
 }
 
-.game:hover{
-transform:scale(1.05);
-background:#222;
+.game img {
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
 }
 
-.game img{
-width:64px;
-height:64px;
-image-rendering:pixelated;
+.name {
+  margin-top: 8px;
+  font-size: 14px;
 }
 
-.name{
-margin-top:8px;
-font-size:14px;
+/* Panic overlay */
+.panic {
+  position: fixed;
+  top:0; left:0;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  display: none;
+  z-index: 999999;
 }
 
-.panic{
-position:fixed;
-top:0;
-left:0;
-width:100vw;
-height:100vh;
-background:black;
-display:none;
-z-index:999999;
+.panic img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
-
-.panic img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
 </style>
-
 </head>
 
 <body>
 
 <header>
-
-<div class="logo">St Eddies Unblocked Games</div>
-
-<div class="search">
-<input id="search" placeholder="Search games...">
-</div>
-
+  <div class="logo">St Eddies Unblocked Games</div>
+  <div class="search">
+    <input id="search" placeholder="Search games...">
+  </div>
+  <button onclick="panic()">Panic</button>
 </header>
-
 
 <div class="games" id="games">
 
-<a class="game" data-name="2048" href="/games/2048/page.html">
-<img src="/games/2048/favicon.ico">
-<div class="name">2048</div>
-</a>
+  <!-- Example game tiles -->
+  <a class="game" data-name="2048" href="/games/2048/page.html">
+    <img src="/games/2048/favicon.ico" alt="2048">
+    <div class="name">2048</div>
+  </a>
 
-<!-- Example future games -->
+  <a class="game" data-name="Tetris" href="#">
+    <img src="/assets/game_placeholder.png" alt="Tetris">
+    <div class="name">Tetris</div>
+  </a>
 
-<a class="game" data-name="tetris" href="#">
-<img src="/assets/game_placeholder.png">
-<div class="name">Tetris</div>
-</a>
-
-<a class="game" data-name="run3" href="#">
-<img src="/assets/game_placeholder.png">
-<div class="name">Run 3</div>
-</a>
+  <a class="game" data-name="Run 3" href="#">
+    <img src="/assets/game_placeholder.png" alt="Run 3">
+    <div class="name">Run 3</div>
+  </a>
 
 </div>
-
 
 <div id="panic" class="panic">
-<img src="/assets/edulink_fake.png">
+  <img src="/assets/edulink_fake.png" alt="Panic">
 </div>
 
-
+<!-- Core JS -->
 <script>
-
-const search=document.getElementById("search")
-
-search.addEventListener("input",()=>{
-
-let filter=search.value.toLowerCase()
-
-document.querySelectorAll(".game").forEach(game=>{
-
-let name=game.dataset.name
-
-if(name.includes(filter)){
-game.style.display="block"
-}else{
-game.style.display="none"
-}
-
-})
-
-})
-
+const search = document.getElementById("search");
+search.addEventListener("input", () => {
+  const filter = search.value.toLowerCase();
+  document.querySelectorAll(".game").forEach(game => {
+    const name = game.dataset.name.toLowerCase();
+    game.style.display = name.includes(filter) ? "block" : "none";
+  });
+});
 
 function panic(){
-document.getElementById("panic").style.display="block"
+  document.getElementById("panic").style.display="block";
 }
 
-document.addEventListener("keydown",e=>{
-
-if(e.key==="Escape"){
-panic()
-}
-
-})
-
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape") panic();
+});
 </script>
 
 </body>
