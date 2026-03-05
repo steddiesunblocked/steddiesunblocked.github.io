@@ -1,386 +1,175 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>St Eddies Unblocked</title>
+<meta charset="utf-8">
+<title>St Eddies Unblocked Games</title>
+
+<link rel="icon" href="/games/2048/favicon.ico">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box;}
-html,body{height:100%;}
-
 body{
-font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-color:#fff;
-background:url("/assets/purple_horizontal_clean_background.gif") center/cover no-repeat fixed;
-overflow-x:hidden;
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#0f0f0f;
+color:white;
 }
 
-/* ---------- BANNER ---------- */
-
-#coreBanner{
-position:fixed;
-top:0;
-left:0;
-right:0;
-height:54px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 12px;
-background:rgba(10,6,22,.8);
-backdrop-filter:blur(10px);
-border-bottom:1px solid rgba(255,255,255,.12);
-z-index:9999;
+header{
+text-align:center;
+padding:30px 10px;
 }
 
-#brandLeft{
-display:flex;
-align-items:center;
-gap:10px;
+.logo{
+font-size:38px;
+font-weight:bold;
 }
 
-#brandLeft img{
-height:34px;
+.search{
+margin-top:15px;
 }
 
-#bannerTitle{
-font-weight:700;
+.search input{
+width:300px;
+max-width:80%;
+padding:10px;
+border-radius:6px;
+border:none;
+font-size:16px;
+}
+
+.games{
+padding:30px;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+gap:20px;
+max-width:1000px;
+margin:auto;
+}
+
+.game{
+background:#1a1a1a;
+padding:15px;
+border-radius:10px;
+text-align:center;
+cursor:pointer;
+transition:.2s;
+}
+
+.game:hover{
+transform:scale(1.05);
+background:#222;
+}
+
+.game img{
+width:64px;
+height:64px;
+image-rendering:pixelated;
+}
+
+.name{
+margin-top:8px;
 font-size:14px;
 }
 
-#bannerRight{
-display:flex;
-gap:10px;
-}
-
-.pill{
-height:34px;
-padding:0 12px;
-border-radius:999px;
-border:1px solid rgba(255,255,255,.14);
-background:rgba(255,255,255,.06);
-color:#fff;
-cursor:pointer;
-font-weight:600;
-}
-
-.pill:hover{
-background:rgba(255,255,255,.1);
-}
-
-.danger{
-background:rgba(255,80,80,.18);
-}
-
-/* ---------- PAGE ---------- */
-
-#app{
-padding-top:54px;
-}
-
-.wrap{
-max-width:1100px;
-margin:auto;
-padding:20px;
-}
-
-/* ---------- HERO ---------- */
-
-#hero{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:10px;
-}
-
-#heroLogo{
-width:min(420px,80vw);
-}
-
-/* ---------- SEARCH ---------- */
-
-#searchRow{
-width:min(760px,96vw);
-display:flex;
-gap:10px;
-margin-top:10px;
-}
-
-#searchInput{
-flex:1;
-height:44px;
-border-radius:12px;
-border:1px solid rgba(255,255,255,.16);
-background:rgba(10,6,22,.55);
-color:#fff;
-padding:0 12px;
-}
-
-#searchBtn{
-height:44px;
-padding:0 14px;
-border-radius:12px;
-border:1px solid rgba(255,255,255,.16);
-background:rgba(255,255,255,.08);
-color:#fff;
-cursor:pointer;
-}
-
-/* ---------- CATEGORIES ---------- */
-
-#cats{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-justify-content:center;
-margin:14px 0 20px;
-}
-
-.catBtn{
-padding:10px 12px;
-border-radius:999px;
-border:1px solid rgba(255,255,255,.16);
-background:rgba(10,6,22,.45);
-cursor:pointer;
-}
-
-.catBtn.active{
-background:rgba(255,255,255,.12);
-}
-
-/* ---------- GRID ---------- */
-
-#grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:12px;
-}
-
-.tile{
-display:block;
-color:#fff;
-border-radius:16px;
-padding:14px;
-border:1px solid rgba(255,255,255,.14);
-background:rgba(10,6,22,.45);
-backdrop-filter:blur(10px);
-cursor:pointer;
-}
-
-.tile:hover{
-background:rgba(255,255,255,.08);
-}
-
-.tileTitle{
-font-weight:800;
-margin-bottom:6px;
-}
-
-.tileDesc{
-opacity:.85;
-font-size:13px;
-}
-
-/* ---------- GAME PLAYER ---------- */
-
-#gamePlayer{
-display:none;
-width:100%;
-height:calc(100vh - 54px);
-background:black;
-}
-
-#gameFrame{
-width:100%;
-height:100%;
-border:none;
-}
-
-/* ---------- PLAY MODE ---------- */
-
-body.playmode #hero,
-body.playmode #grid{
-display:none;
-}
-
-body.playmode #gamePlayer{
-display:block;
-}
-
-/* ---------- STEALTH ---------- */
-
-body.stealth #app{
-display:none;
-}
-
-#stealthFrame{
-display:none;
+.panic{
 position:fixed;
-inset:0;
-width:100%;
-height:100%;
-border:0;
-background:#fff;
-z-index:9998;
+top:0;
+left:0;
+width:100vw;
+height:100vh;
+background:black;
+display:none;
+z-index:999999;
 }
 
-body.stealth #stealthFrame{
-display:block;
+.panic img{
+width:100%;
+height:100%;
+object-fit:cover;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<iframe id="stealthFrame" src="/assets/edulink_fake.png"></iframe>
+<header>
 
-<!-- BANNER -->
+<div class="logo">St Eddies Unblocked Games</div>
 
-<div id="coreBanner">
+<div class="search">
+<input id="search" placeholder="Search games...">
+</div>
 
-<div id="brandLeft">
+</header>
 
-<button id="backBtn" class="pill" style="display:none">← Back</button>
 
-<img src="/assets/steddiesunblocked_logo_pulse.gif">
+<div class="games" id="games">
 
-<div id="bannerTitle">St Eddies Unblocked</div>
+<a class="game" data-name="2048" href="/games/2048/page.html">
+<img src="/games/2048/favicon.ico">
+<div class="name">2048</div>
+</a>
+
+<!-- Example future games -->
+
+<a class="game" data-name="tetris" href="#">
+<img src="/assets/game_placeholder.png">
+<div class="name">Tetris</div>
+</a>
+
+<a class="game" data-name="run3" href="#">
+<img src="/assets/game_placeholder.png">
+<div class="name">Run 3</div>
+</a>
 
 </div>
 
-<div id="bannerRight">
 
-<button class="pill danger" id="panicBtn">Panic</button>
-
+<div id="panic" class="panic">
+<img src="/assets/edulink_fake.png">
 </div>
 
-</div>
-
-<!-- MAIN APP -->
-
-<div id="app">
-
-<div class="wrap">
-
-<div id="hero">
-
-<img id="heroLogo" src="/assets/steddiesunblocked_logo_pulse.gif">
-
-<div id="searchRow">
-<input id="searchInput" placeholder="Search games...">
-<button id="searchBtn">Search</button>
-</div>
-
-<div id="cats">
-<button class="catBtn active" data-cat="all">All</button>
-<button class="catBtn" data-cat="games">Games</button>
-<button class="catBtn" data-cat="apps">Apps</button>
-<button class="catBtn" data-cat="tools">Tools</button>
-</div>
-
-</div>
-
-<!-- GAME GRID -->
-
-<div id="grid">
-
-<div class="tile" onclick="loadGame('games/2048/index.html')">
-<div class="tileTitle">2048</div>
-<div class="tileDesc">Sliding tile puzzle game</div>
-</div>
-
-</div>
-
-</div>
-
-<!-- GAME PLAYER -->
-
-<div id="gamePlayer">
-
-<iframe id="gameFrame"></iframe>
-
-</div>
-
-</div>
 
 <script>
 
-const body=document.body;
+const search=document.getElementById("search")
 
-const stealthBtn=document.getElementById("stealthBtn");
+search.addEventListener("input",()=>{
 
-const panicBtn=document.getElementById("panicBtn");
+let filter=search.value.toLowerCase()
 
-const backBtn=document.getElementById("backBtn");
+document.querySelectorAll(".game").forEach(game=>{
 
-/* ---------- GAME LOADER ---------- */
+let name=game.dataset.name
 
-function loadGame(url){
-
-const frame=document.getElementById("gameFrame");
-
-frame.src=url;
-
-body.classList.add("playmode");
-
-backBtn.style.display="inline-block";
-
-window.scrollTo(0,0);
-
+if(name.includes(filter)){
+game.style.display="block"
+}else{
+game.style.display="none"
 }
 
-/* ---------- BACK BUTTON ---------- */
+})
 
-backBtn.onclick=()=>{
+})
 
-body.classList.remove("playmode");
 
-document.getElementById("gameFrame").src="";
-
-backBtn.style.display="none";
-
-};
-
-/* ---------- STEALTH ---------- */
-
-function setStealth(on){
-
-body.classList.toggle("stealth",on);
-
+function panic(){
+document.getElementById("panic").style.display="block"
 }
 
-stealthBtn.onclick=()=>{
+document.addEventListener("keydown",e=>{
 
-setStealth(!body.classList.contains("stealth"));
-
-};
-
-panicBtn.onclick=()=>{
-
-window.scrollTo(0,0);
-
-setStealth(true);
-
-};
-
-window.addEventListener("keydown",e=>{
-
-if(e.ctrlKey&&e.key==="e"){
-
-e.preventDefault();
-
-setStealth(!body.classList.contains("stealth"));
-
+if(e.key==="Escape"){
+panic()
 }
 
-if(e.key==="Escape") setStealth(false);
-
-});
+})
 
 </script>
 
