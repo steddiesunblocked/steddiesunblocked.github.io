@@ -1,344 +1,307 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>EduLink One</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>St Eddies Unblocked</title>
 
-  <style>
-    /* ===== RESET ===== */
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html, body { height:100%; }
+<style>
 
-    /* ===== BACKGROUND ===== */
-    body{
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: #fff;
-      background: url("/assets/purple_horizontal_clean_background.gif") center/cover no-repeat fixed;
-      overflow-x: hidden;
-    }
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
 
-    /* ===== CORE BANNER ===== */
-    #coreBanner{
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 54px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 12px;
-      background: rgba(10, 6, 22, 0.78);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,0.12);
-      z-index: 9999;
-    }
+body{
+font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+color:#fff;
+background:url("/assets/purple_horizontal_clean_background.gif") center/cover no-repeat fixed;
+overflow-x:hidden;
+}
 
-    #brandLeft{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width: 220px;
-    }
+#coreBanner{
+position:fixed;
+top:0;left:0;right:0;
+height:54px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 12px;
+background:rgba(10,6,22,.8);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,.12);
+z-index:9999;
+}
 
-    #brandLeft img{
-      height: 34px;
-      width: auto;
-      image-rendering: auto;
-    }
+#brandLeft{
+display:flex;
+align-items:center;
+gap:10px;
+}
 
-    #bannerTitle{
-      font-weight: 700;
-      font-size: 14px;
-      opacity: 0.95;
-      white-space: nowrap;
-    }
+#brandLeft img{
+height:34px;
+}
 
-    #bannerRight{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
+#bannerTitle{
+font-weight:700;
+font-size:14px;
+}
 
-    .pill{
-      height: 34px;
-      padding: 0 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      color: #fff;
-      cursor: pointer;
-      font-weight: 650;
-      font-size: 13px;
-    }
-    .pill:hover{ background: rgba(255,255,255,0.10); }
+#bannerRight{
+display:flex;
+gap:10px;
+}
 
-    .danger{
-      border-color: rgba(255, 80, 80, 0.35);
-      background: rgba(255, 80, 80, 0.16);
-    }
-    .danger:hover{ background: rgba(255, 80, 80, 0.22); }
+.pill{
+height:34px;
+padding:0 12px;
+border-radius:999px;
+border:1px solid rgba(255,255,255,.14);
+background:rgba(255,255,255,.06);
+color:#fff;
+cursor:pointer;
+font-weight:600;
+}
 
-    /* ===== LAYOUT ===== */
-    #app{
-      padding-top: 54px; /* space for banner */
-      min-height: 100%;
-    }
+.pill:hover{
+background:rgba(255,255,255,.1);
+}
 
-    .wrap{
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 18px 14px 48px;
-    }
+.danger{
+background:rgba(255,80,80,.16);
+}
 
-    /* ===== HERO ===== */
-    #hero{
-      display:flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      padding: 18px 0 10px;
-    }
+#app{
+padding-top:54px;
+}
 
-    #heroLogo{
-      width: min(420px, 78vw);
-      height: auto;
-      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.35));
-    }
+.wrap{
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
 
-    #searchRow{
-      width: min(760px, 96vw);
-      display:flex;
-      gap:10px;
-      margin-top: 8px;
-    }
+#hero{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:10px;
+}
 
-    #searchInput{
-      flex:1;
-      height: 44px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(10, 6, 22, 0.55);
-      color: #fff;
-      padding: 0 12px;
-      outline: none;
-      backdrop-filter: blur(10px);
-    }
+#heroLogo{
+width:min(420px,80vw);
+}
 
-    #searchInput::placeholder{ color: rgba(255,255,255,0.65); }
+#searchRow{
+width:min(760px,96vw);
+display:flex;
+gap:10px;
+margin-top:10px;
+}
 
-    #searchBtn{
-      height: 44px;
-      border-radius: 12px;
-      padding: 0 14px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-      cursor: pointer;
-      font-weight: 700;
-    }
-    #searchBtn:hover{ background: rgba(255,255,255,0.12); }
+#searchInput{
+flex:1;
+height:44px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,.16);
+background:rgba(10,6,22,.55);
+color:#fff;
+padding:0 12px;
+}
 
-    /* ===== CATEGORY BAR ===== */
-    #cats{
-      display:flex;
-      gap:10px;
-      flex-wrap: wrap;
-      justify-content:center;
-      margin: 14px 0 18px;
-    }
+#searchBtn{
+height:44px;
+padding:0 14px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,.16);
+background:rgba(255,255,255,.08);
+color:#fff;
+cursor:pointer;
+}
 
-    .catBtn{
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(10, 6, 22, 0.45);
-      cursor:pointer;
-      font-weight: 700;
-      font-size: 13px;
-      color:#fff;
-      backdrop-filter: blur(10px);
-    }
-    .catBtn.active{
-      background: rgba(255,255,255,0.12);
-    }
+#cats{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+justify-content:center;
+margin:14px 0 20px;
+}
 
-    /* ===== GRID ===== */
-    #grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 12px;
-    }
+.catBtn{
+padding:10px 12px;
+border-radius:999px;
+border:1px solid rgba(255,255,255,.16);
+background:rgba(10,6,22,.45);
+cursor:pointer;
+}
 
-    .tile{
-      display:block;
-      text-decoration:none;
-      color:#fff;
-      border-radius: 16px;
-      padding: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(10, 6, 22, 0.45);
-      backdrop-filter: blur(10px);
-      transition: transform .08s ease, background .12s ease;
-      min-height: 86px;
-    }
-    .tile:hover{
-      transform: translateY(-2px);
-      background: rgba(255,255,255,0.08);
-    }
+.catBtn.active{
+background:rgba(255,255,255,.12);
+}
 
-    .tileTitle{ font-weight: 800; margin-bottom: 6px; }
-    .tileDesc{ opacity: 0.85; font-size: 13px; }
+#grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:12px;
+}
 
-    /* ===== STEALTH MODE ===== */
-    body.stealth #app{ display:none; }
+.tile{
+display:block;
+text-decoration:none;
+color:#fff;
+border-radius:16px;
+padding:14px;
+border:1px solid rgba(255,255,255,.14);
+background:rgba(10,6,22,.45);
+backdrop-filter:blur(10px);
+cursor:pointer;
+}
 
-    #stealthFrame{
-      display:none;
-      position: fixed;
-      inset: 0;
-      border: 0;
-      width: 100%;
-      height: 100%;
-      background: #fff;
-      z-index: 9998;
-    }
-    body.stealth #stealthFrame{ display:block; }
+.tile:hover{
+background:rgba(255,255,255,.08);
+}
 
-    /* mobile tweaks */
-    @media (max-width: 520px){
-      #bannerTitle{ display:none; }
-      #brandLeft{ min-width: unset; }
-    }
-  </style>
+.tileTitle{
+font-weight:800;
+margin-bottom:6px;
+}
+
+.tileDesc{
+opacity:.85;
+font-size:13px;
+}
+
+#gamePlayer{
+display:none;
+margin:30px auto;
+width:900px;
+height:600px;
+border-radius:16px;
+border:3px solid rgba(255,255,255,.2);
+overflow:hidden;
+background:black;
+}
+
+#gameFrame{
+width:100%;
+height:100%;
+border:none;
+}
+
+body.stealth #app{display:none;}
+
+#stealthFrame{
+display:none;
+position:fixed;
+inset:0;
+width:100%;
+height:100%;
+border:0;
+background:#fff;
+z-index:9998;
+}
+
+body.stealth #stealthFrame{display:block;}
+
+</style>
 </head>
 
 <body>
-  <!-- Fake EduLink / stealth overlay -->
-  <iframe id="stealthFrame" title="EduLink" src="/assets/edulink_fake.png"></iframe>
 
-  <!-- Core banner -->
-  <div id="coreBanner">
-    <div id="brandLeft">
-      /*<img src="/assets/steddiesunblocked_logo_pulse.gif" alt="logo">
-      <div id="bannerTitle">St Eddies Unblocked</div>
-    </div>
+<iframe id="stealthFrame" src="/assets/edulink_fake.png"></iframe>
 
-    <div id="bannerRight">
-      <button class="pill" id="stealthBtn" title="Ctrl+E">Stealth</button>
-      <button class="pill danger" id="panicBtn" title="Instant redirect">Panic</button>
-    </div>
-  </div>
+<div id="coreBanner">
 
-  <!-- App -->
-  <div id="app">
-    <div class="wrap">
-      <div id="hero">
-        <img id="heroLogo" src="/assets/steddiesunblocked_logo_pulse.gif" alt="St Eddies Unblocked">
+<div id="brandLeft">
+<img src="/assets/steddiesunblocked_logo_pulse.gif">
+<div id="bannerTitle">St Eddies Unblocked</div>
+</div>
 
-        <div id="searchRow">
-          <input id="searchInput" placeholder="Search games/apps… (filters tiles)" autocomplete="off">
-          <button id="searchBtn">Search</button>
-        </div>
+<div id="bannerRight">
+<button class="pill" id="stealthBtn">Stealth</button>
+<button class="pill danger" id="panicBtn">Panic</button>
+</div>
 
-        <div id="cats">
-          <button class="catBtn active" data-cat="all">All</button>
-          <button class="catBtn" data-cat="games">Games</button>
-          <button class="catBtn" data-cat="apps">Apps</button>
-          <button class="catBtn" data-cat="tools">Tools</button>
-        </div>
-      </div>
+</div>
 
-      <div id="grid">
-        <!-- SAMPLE TILES: replace links with your real ones -->
-        <a class="tile" data-cat="games" href="https://steddiesunblocked.github.io/games/2048/index.html" target="_blank" rel="noopener">
-          <div class="tileTitle">2048</div>
-          <div class="tileDesc">a single-player sliding tile puzzle video game.</div>
-        </a>
+<div id="app">
 
-        <a class="tile" data-cat="games" href="https://example.com/game2" target="_blank" rel="noopener">
-          <div class="tileTitle">Shortcut Race</div>
-          <div class="tileDesc">Race + build shortcuts.</div>
-        </a>
+<div class="wrap">
 
-        <a class="tile" data-cat="apps" href="https://example.com/app1" target="_blank" rel="noopener">
-          <div class="tileTitle">YouTube</div>
-          <div class="tileDesc">Open video site.</div>
-        </a>
+<div id="hero">
 
-        <a class="tile" data-cat="tools" href="https://example.com/tool1" target="_blank" rel="noopener">
-          <div class="tileTitle">Proxy / Mirror</div>
-          <div class="tileDesc">Useful links bucket.</div>
-        </a>
-      </div>
-    </div>
-  </div>
+<img id="heroLogo" src="/assets/steddiesunblocked_logo_pulse.gif">
 
-  <script>
-    const body = document.body;
-    const stealthBtn = document.getElementById("stealthBtn");
-    const panicBtn = document.getElementById("panicBtn");
-    const searchInput = document.getElementById("searchInput");
-    const searchBtn = document.getElementById("searchBtn");
-    const tiles = Array.from(document.querySelectorAll(".tile"));
-    const catBtns = Array.from(document.querySelectorAll(".catBtn"));
-    const stealthFrame = document.getElementById("stealthFrame");
+<div id="searchRow">
+<input id="searchInput" placeholder="Search games...">
+<button id="searchBtn">Search</button>
+</div>
 
-    // --- Stealth toggle ---
-    function setStealth(on){
-      body.classList.toggle("stealth", on);
-      // If you want the fake edulink to be an actual HTML page later, swap src here.
-      // For now it points at the PNG in /assets (browser will show it).
-    }
+<div id="cats">
+<button class="catBtn active" data-cat="all">All</button>
+<button class="catBtn" data-cat="games">Games</button>
+<button class="catBtn" data-cat="apps">Apps</button>
+<button class="catBtn" data-cat="tools">Tools</button>
+</div>
 
-    stealthBtn.addEventListener("click", () => {
-      setStealth(!body.classList.contains("stealth"));
-    });
+</div>
 
-    // Ctrl+E toggles stealth, Esc exits
-    window.addEventListener("keydown", (e) => {
-      if (e.ctrlKey && (e.key === "e" || e.key === "E")) {
-        e.preventDefault();
-        setStealth(!body.classList.contains("stealth"));
-      }
-      if (e.key === "Escape") setStealth(false);
-    });
+<div id="grid">
 
-    // --- Panic: instant "normal" looking page ---
-    // Uses your edulink fake image as a believable cover.
-    panicBtn.addEventListener("click", () => {
-      // quickest: go stealth and scroll to top
-      window.scrollTo(0,0);
-      setStealth(true);
-    });
+<div class="tile" data-cat="games" onclick="loadGame('games/2048/index.html')">
+<div class="tileTitle">2048</div>
+<div class="tileDesc">Sliding tile puzzle game</div>
+</div>
 
-    // --- Filtering (search + category) ---
-    let activeCat = "all";
+</div>
 
-    function applyFilters(){
-      const q = searchInput.value.trim().toLowerCase();
-      tiles.forEach(t => {
-        const cat = t.getAttribute("data-cat");
-        const text = (t.innerText || "").toLowerCase();
-        const matchCat = (activeCat === "all") || (cat === activeCat);
-        const matchQ = (!q) || text.includes(q);
-        t.style.display = (matchCat && matchQ) ? "block" : "none";
-      });
-    }
+<div id="gamePlayer">
+<iframe id="gameFrame"></iframe>
+</div>
 
-    catBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        catBtns.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        activeCat = btn.dataset.cat;
-        applyFilters();
-      });
-    });
+</div>
+</div>
 
-    searchInput.addEventListener("input", applyFilters);
-    searchBtn.addEventListener("click", applyFilters);
+<script>
 
-    // init
-    applyFilters();
-  </script>
+const body=document.body;
+const stealthBtn=document.getElementById("stealthBtn");
+const panicBtn=document.getElementById("panicBtn");
+
+function setStealth(on){
+body.classList.toggle("stealth",on);
+}
+
+stealthBtn.onclick=()=>setStealth(!body.classList.contains("stealth"));
+
+panicBtn.onclick=()=>{
+window.scrollTo(0,0);
+setStealth(true);
+};
+
+window.addEventListener("keydown",e=>{
+if(e.ctrlKey&&e.key==="e"){
+e.preventDefault();
+setStealth(!body.classList.contains("stealth"));
+}
+if(e.key==="Escape")setStealth(false);
+});
+
+function loadGame(url){
+
+const player=document.getElementById("gamePlayer");
+const frame=document.getElementById("gameFrame");
+
+frame.src=url;
+player.style.display="block";
+
+window.scrollTo({
+top:player.offsetTop-60,
+behavior:"smooth"
+});
+
+}
+
+</script>
+
 </body>
 </html>
