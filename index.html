@@ -1,153 +1,232 @@
 <!doctype html>
 <html lang="en">
+
 <head>
 <meta charset="utf-8">
-<title>St Eddies Unblocked Games</title>
+
+<title>EduLink One</title>
 <link rel="icon" href="/favicon.ico">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preload" as="image" href="/assets/edulink_fake.png">
 
 <style>
-/* Reset */
-* { margin:0; padding:0; box-sizing:border-box; }
-html, body { width:100%; height:100%; overflow-x:hidden; }
 
-/* Background GIF */
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: url('/assets/purple_horizontal_clean_background.gif') center center / cover no-repeat;
-  color:white;
+/* reset */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-/* Header */
-header {
-  width:100%;
-  background: rgba(0,0,0,0.6);
-  display:flex;
-  justify-content: space-between;
-  align-items:center;
-  padding:10px 20px;
-  position: fixed;
-  top:0;
-  z-index:10;
+html,body{
+height:100%;
+overflow-x:hidden;
+font-family:Arial, Helvetica, sans-serif;
 }
 
-.logo img { height:50px; }
-
-/* Search input */
-.search input {
-  padding:8px 12px;
-  border-radius:6px;
-  border:none;
-  font-size:16px;
+/* background */
+body{
+background:url("/assets/purple_horizontal_clean_background.gif") center center / cover no-repeat fixed;
+color:white;
 }
 
-/* Panic button */
-header button { padding:6px 12px; border:none; border-radius:6px; cursor:pointer; }
-
-/* Main grid for game icons */
-main {
-  margin-top:80px;
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
-  gap:20px;
-  max-width:1200px;
-  margin-left:auto;
-  margin-right:auto;
-  padding:20px;
+/* header */
+header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:12px 20px;
+background:rgba(0,0,0,0.65);
+position:fixed;
+top:0;
+width:100%;
+z-index:10;
 }
 
-/* Individual game tile */
-.game {
-  background: rgba(0,0,0,0.7);
-  padding:15px;
-  border-radius:10px;
-  text-align:center;
-  cursor:pointer;
-  transition:.2s;
-}
-.game:hover { transform: scale(1.05); background: rgba(50,50,50,0.9); }
-.game img { width:64px; height:64px; image-rendering:pixelated; }
-.name { margin-top:8px; font-size:14px; }
-
-/* Player iframe */
-#player {
-  display:block;
-  width:100%;
-  max-width:640px;
-  height:640px;
-  margin:40px auto;
-  border:none;
-  background:black;
+/* logo */
+.logo img{
+height:55px;
 }
 
-/* Panic overlay */
-.panic {
-  position:fixed;
-  top:0; left:0;
-  width:100vw; height:100vh;
-  display:none;
-  z-index:9999;
+/* search */
+.search input{
+padding:8px 12px;
+border-radius:6px;
+border:none;
+font-size:15px;
 }
-.panic img {
-  width:100%; height:100%; object-fit:cover;
+
+/* panic area */
+.panic-controls{
+display:flex;
+align-items:center;
+gap:10px;
 }
+
+.panic-controls button{
+padding:6px 12px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.panic-controls span{
+font-size:13px;
+opacity:0.85;
+}
+
+/* game grid */
+
+.games{
+margin-top:110px;
+max-width:1200px;
+margin-left:auto;
+margin-right:auto;
+
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+gap:20px;
+
+padding:20px;
+}
+
+/* game tile */
+
+.game{
+background:rgba(0,0,0,0.7);
+padding:15px;
+border-radius:10px;
+text-align:center;
+cursor:pointer;
+transition:.2s;
+text-decoration:none;
+color:white;
+}
+
+.game:hover{
+transform:scale(1.05);
+background:rgba(40,40,40,0.9);
+}
+
+.game img{
+width:64px;
+height:64px;
+image-rendering:pixelated;
+}
+
+.name{
+margin-top:8px;
+font-size:14px;
+}
+
+/* panic overlay */
+
+#panic{
+position:fixed;
+top:0;
+left:0;
+width:100vw;
+height:100vh;
+display:none;
+z-index:99999;
+}
+
+#panic img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
 </style>
 </head>
+
 
 <body>
 
 <header>
-  <div class="logo">
-    <img src="/assets/steddiesunblocked_logo_pulse.gif" alt="St Eddies Logo">
-  </div>
-  <div class="search"><input id="search" placeholder="Search games..."></div>
-  <button onclick="panic()">Panic</button>
-</header>
 
-<main id="games">
-  <a class="game" data-name="2048" href="/games/2048/page.html">
-    <img src="/favicon.ico" alt="2048">
-    <div class="name">2048</div>
-  </a>
-  <a class="game" data-name="Tetris" href="#">
-    <img src="/favicon.ico" alt="Tetris">
-    <div class="name">Tetris</div>
-  </a>
-  <a class="game" data-name="Run 3" href="#">
-    <img src="/favicon.ico" alt="Run 3">
-    <div class="name">Run 3</div>
-  </a>
-</main>
-
-<!-- Player iframe -->
-<iframe id="player" src="/games/2048/index.html"></iframe>
-
-<!-- Panic overlay -->
-<div id="panic" class="panic">
-  <img src="/assets/edulink_fake.png" alt="Panic">
+<div class="logo">
+<img src="/assets/steddiesunblocked_logo_pulse.gif">
 </div>
 
+<div class="search">
+<input id="search" placeholder="Search games...">
+</div>
+
+<div class="panic-controls">
+<button onclick="togglePanic()">Panic</button>
+<span>Ctrl + F to Toggle</span>
+</div>
+
+</header>
+
+
+<div class="games" id="games">
+
+<a class="game" data-name="2048" href="/games/2048/page.html">
+<img src="/games/2048/favicon.ico">
+<div class="name">2048</div>
+</a>
+
+<!-- add more games like this -->
+
+</div>
+
+
+<div id="panic">
+<img src="/assets/edulink_fake.png">
+</div>
+
+
 <script>
-// Search filter
-const search = document.getElementById("search");
-search.addEventListener("input", () => {
-  const filter = search.value.toLowerCase();
-  document.querySelectorAll(".game").forEach(game => {
-    const name = game.dataset.name.toLowerCase();
-    game.style.display = name.includes(filter) ? "block" : "none";
-  });
-});
 
-// Panic function
-function panic() { document.getElementById("panic").style.display="block"; }
+/* search */
 
-// Panic toggle with Ctrl+F
-document.addEventListener("keydown", e => {
-  if(e.ctrlKey && e.key.toLowerCase() === "f") {
-    e.preventDefault();
-    panic();
-  }
-});
+const search=document.getElementById("search")
+
+search.addEventListener("input",()=>{
+
+let filter=search.value.toLowerCase()
+
+document.querySelectorAll(".game").forEach(game=>{
+
+let name=game.dataset.name.toLowerCase()
+
+game.style.display = name.includes(filter) ? "block" : "none"
+
+})
+
+})
+
+
+/* panic toggle */
+
+const panic=document.getElementById("panic")
+
+function togglePanic(){
+
+panic.style.display =
+panic.style.display === "block" ? "none" : "block"
+
+}
+
+
+/* ctrl+f toggle */
+
+document.addEventListener("keydown",e=>{
+
+if(e.ctrlKey && e.key.toLowerCase()==="f"){
+
+e.preventDefault()
+
+togglePanic()
+
+}
+
+})
+
 </script>
 
 </body>
